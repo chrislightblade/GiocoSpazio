@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public class Sistema {
     
     ArrayList<Pianeta> pianeti;
-    fascia esterna = meteoriti, nebulosa, 
-            trovi= sfera dyson, base aliena ,base pirata
+    
 
     public Sistema() {
         int valore = (int) Math.floor(Math.random() * 10) + 1;

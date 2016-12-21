@@ -19,5 +19,10 @@ public class Account_giocatore {
     private int numeroPianetiPosseduti;
     private String ufficiali;
     
+    public void costruisciStruttura(){
+        check sul limite delle strutture, sullo spazio sul pianeta, 
+                su risorse, sulle ricerche, sui bonus per il tempo costruzione e costi
+                        calcola tempo in base a tempo base struttura e bonus sulla riduzione tempo
+    }
     
 }

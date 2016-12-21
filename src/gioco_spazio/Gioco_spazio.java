@@ -20,4 +20,8 @@ public class Gioco_spazio {
         // TODO code application logic here
     }
     
+    public void refreshTotale(){
+        
+    }
+    
 }
