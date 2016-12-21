@@ -198,7 +198,7 @@ public class Pianeta {
             
         }
         
-        richiama funzione level uop della struttura
+        richiama funzione level up della struttura
     }
     
     public void potenziaDepositoCristallo(){
@@ -210,6 +210,4 @@ public class Pianeta {
     }
     
 }
-pianeti adibiti = ricerca ingengeristica, bioingegneria (hanno la rete di ricerca);
-fascia esterna = meteoriti, nebulosa, 
-            trovi= sfera dyson, base aliena ,base pirata
+

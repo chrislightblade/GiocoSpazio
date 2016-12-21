@@ -38,3 +38,6 @@ public class Sistema {
 }
 
 pianeti specifici ed evento
+pianeti adibiti = ricerca ingengeristica, bioingegneria (hanno la rete di ricerca);
+fascia esterna = meteoriti, nebulosa, 
+            trovi= sfera dyson, base aliena ,base pirata
