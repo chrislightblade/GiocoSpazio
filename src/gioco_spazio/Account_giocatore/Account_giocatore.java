@@ -15,9 +15,9 @@ public class Account_giocatore {
     private int cristalloTotale;
     private int metalloTotale;
     private int idrogenoTotale;
-    private int creditiTotale;
+    //private int creditiTotale;
     private int numeroPianetiPosseduti;
-    private String ufficiali;
+    //private String ufficiali;
     
     public void costruisciStruttura(){
         check sul limite delle strutture, sullo spazio sul pianeta, 

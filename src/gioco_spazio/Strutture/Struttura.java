@@ -6,6 +6,8 @@
 package gioco_spazio.Strutture;
 
 import gioco_spazio.Sistemi.Pianeta;
+import java.util.Date;
+import util.DateFunction;
 
 /**
  *
@@ -19,8 +21,42 @@ public class Struttura {
     private int costoCristallo;
     private int costoIdrogeno;
     private String tempoLevelUp;
-    private double fattoreProduzione;
+    private double fattoreProduzione;//per aggiornare la produzione post levelUp    
+    private int valoreProdotto;//al secondo    
     private boolean levelUp = false;
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void levelUp(Pianeta p) {
+        //level up in tot tempo;
+            levelUp = true;
+            p.setRiservaCristallo(costoCristallo);
+            p.setRiservaMetallo(costoMetallo);
+            p.setRiservaIdrogeno(costoIdrogeno);
+        
+    }
+
+    public void setParametriPostLevelUp(double p1, double p2, double p3, double p4) {
+
+        setCostoMetallo(costoMetallo * p1(parametro));
+        setCostoCristallo(costoCristallo * p2(parametro));
+        setCostoIdrogeno(costoIdrogeno * p3(parametro));
+        setTempoLevelUp(tempoLevelUp * p4(parametro));
+    }
+
+    public void aggiornaProduzioni(Pianeta p) {
+        Date data = new Date();
+        String Data = DateFunction.converti(data);
+        tempo = converti in secondi da usare per il calcolo;
+        p.setRiservaCristallo(valoreProdottoCristallo * tempo);
+        p.setRiservaMetallo(valoreProdottoMetallo * tempo);
+        p.setRiservaIdrogeno(valoreProdottoIdrogeno * tempo);
+    }
+    
+
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String getTempoLevelUp() {
         return tempoLevelUp;
@@ -76,34 +112,25 @@ public class Struttura {
 
     public void setFattoreProduzione(double fattoreProduzione) {
         this.fattoreProduzione = fattoreProduzione;
+    }    
+
+    public int getValoreProdottoIdrogeno() {
+        return valoreProdotto;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void levelUp(Pianeta p) {
-        if (p.getRiservaMetallo() >= costoMetallo && p.getRiservaCristallo() >= costoCristallo && p.getRiservaIdrogeno() >= costoIdrogeno ) {//level up in tot tempo;
-            levelUp = true;
-            p.setRiservaCristallo(costoCristallo);
-            p.setRiservaMetallo(costoMetallo);
-            p.setRiservaIdrogeno(costoIdrogeno);
-        }
-
+    public void setValoreProdotto(int valoreProdotto) {
+        this.valoreProdotto = valoreProdotto;
     }
 
-    public void setParametriPostLevelUp(double p1, double p2, double p3, double p4) {
-
-        setCostoMetallo(costoMetallo * p1(parametro));
-        setCostoCristallo(costoCristallo * p2(parametro));
-        setCostoIdrogeno(costoIdrogeno * p3(parametro));
-        setTempoLevelUp(tempoLevelUp * p4(parametro));
+    public boolean isLevelUp() {
+        return levelUp;
     }
 
-    public static void aggiornaProduzioni() {
-
+    public void setLevelUp(boolean levelUp) {
+        this.levelUp = levelUp;
     }
 
-    public static void checkCosto() {//--------> consegue aggiornamento struttura dopo x tempo
-        //controlla se si ha abbastanza risorse per costruire una struttura
-    }
+    
 
 }
 miniera metallo, cristallo, idrogeno;

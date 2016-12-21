@@ -16,7 +16,7 @@ public class Sistema {
     ArrayList<Pianeta> pianeti;
     
 
-    public Sistema() {
+    public Sistema() {//creare pianeti casuali ed eventualmente specifici
         int valore = (int) Math.floor(Math.random() * 10) + 1;
         this.pianeti = new ArrayList<Pianeta>();
         for (int i = 0; i < 10; i++) {
@@ -29,9 +29,12 @@ public class Sistema {
     
     public void creaPianetaCasuale(){
         int spazi = 40 + (20 * posizione) + ((int) Math.floor(Math.random() * 10));
+        int temperatura = -200 e poi sale e poi riscende;
     }
     
     public void creaPianetaConTerraformare(){
         
     }
 }
+
+pianeti specifici ed evento

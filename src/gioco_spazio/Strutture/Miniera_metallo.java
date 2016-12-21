@@ -11,7 +11,7 @@ import gioco_spazio.Sistemi.Pianeta;
  *
  * @author tss
  */
-public class Miniera_metallo extends Struttura{
+public class Miniera_metallo extends Struttura {
 
     public Miniera_metallo() {
         setNomeStruttura("Miniera di Metallo");
@@ -20,17 +20,25 @@ public class Miniera_metallo extends Struttura{
         setCostoCristallo(costoCristallo);
         setCostoIdrogeno(costoIdrogeno);
         setTempoLevelUp(tempoLevelUp);
-    }
-    
-    
-    
-    public void produciMetallo(Pianeta p){
+        setFattoreProduzione(fattoreProduzione);//per aggiornare la produzione post levelUp        
+        setValoreProdotto(valoreProdotto);//al secondo
         
-        if(p.getRiservaMetallo() < p.getDepositoMetallo())
-        fattore produzione;
+    }
+
+    public void produciMetallo(Pianeta p, Struttura s) {
+
+        if (p.getRiservaMetallo() < p.getDepositoMetallo()) {
+            s.getFattoreProduzione() * tempo;
+            
+        }
+        produzione;
         livello struttura;
         bonus ricerca;
-        (se la produz super deposito, allora riempi semplicemente il deposito)
+        (se la  produz super deposito
+        , allora riempi semplicemente il deposito
+    
+
+)
         
     }
     

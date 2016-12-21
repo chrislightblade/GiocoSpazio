@@ -5,6 +5,8 @@
  */
 package gioco_spazio.Sistemi;
 
+import gioco_spazio.Navi.Nave;
+import gioco_spazio.Difese.Difesa;
 import gioco_spazio.Strutture.Struttura;
 import java.util.ArrayList;
 
@@ -15,12 +17,14 @@ import java.util.ArrayList;
 public class Pianeta {
     
     private String nome;
-    private int dimensione;
+    private int dimensione; ( dal quale calcolo gli spazi?)
     private int spazioDisponibile;
+    private int spazioUtilizzato;
     private int posizione;
+    private int temperatura;
     private ArrayList<Struttura> strutture;
-    private ArrayList<Difese> difese;
-    private ArrayList<Navi> navi;
+    private ArrayList<Difesa> difese;
+    private ArrayList<Nave> navi;
     //private int abitanti;
     private int riservaMetallo;
     private int riservaCristallo;
@@ -30,7 +34,7 @@ public class Pianeta {
     private int depositoIdrogeno;
     //private int crediti;
 
-    public Pianeta(String nome, int dimensione, int spazioDisponibile, int posizione, ArrayList<Struttura> strutture, ArrayList<Difese> difese, ArrayList<Navi> navi, int riservaMetallo, int riservaCristallo, int riservaIdrogeno) {
+    public Pianeta(String nome, int dimensione, int spazioDisponibile, int posizione, ArrayList<Struttura> strutture, ArrayList<Difesa> difese, ArrayList<Nave> navi, int riservaMetallo, int riservaCristallo, int riservaIdrogeno) {
         this.nome = nome;
         this.dimensione = dimensione;
         this.spazioDisponibile = spazioDisponibile;
@@ -67,6 +71,14 @@ public class Pianeta {
         this.spazioDisponibile = spazioDisponibile;
     }
 
+    public int getSpazioUtilizzato() {
+        return spazioUtilizzato;
+    }
+
+    public void setSpazioUtilizzato(int spazioUtilizzato) {
+        this.spazioUtilizzato = spazioUtilizzato;
+    }    
+    
     public int getPosizione() {
         return posizione;
     }
@@ -74,6 +86,14 @@ public class Pianeta {
     public void setPosizione(int posizione) {
         this.posizione = posizione;
     }
+
+    public int getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(int temperatura) {
+        this.temperatura = temperatura;
+    }    
 
     public ArrayList<Struttura> getStrutture() {
         return strutture;
@@ -149,6 +169,29 @@ public class Pianeta {
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    public void riempiRiserva(int valore, String nome){
+        if(nome.equals("Miniera di Ferro")){
+            riservaMetallo += valore;
+            if(riservaMetallo > depositoMetallo){
+                riservaMetallo = depositoMetallo;
+            }
+        }
+        
+        if(nome.equals("Miniera di Cristallo")){
+            riservaCristallo += valore;
+            if(riservaCristallo > depositoCristallo){
+                riservaCristallo = depositoCristallo;
+            }
+        }
+        
+        if(nome.equals("Miniera di Idrogeno")){
+            riservaIdrogeno += valore;
+            if(riservaIdrogeno > depositoIdrogeno){
+                riservaIdrogeno = depositoIdrogeno;
+            }
+        }
+    }
+        
     
     public void potenziaDepositoMetallo(){
         if(checkCosto){
