@@ -12,7 +12,7 @@ package gioco_spazio.Tecnologie;
 public class Ricerca {
     
 }
-laser;
+/*laser;
 ionica;
 plasma;
 informatica;
@@ -30,4 +30,4 @@ tecnologie = armi;
 tecnologie = corazze;
 tecnologie = scudi;
 gravitonica;
-tech. di produzione (produzione e numero miniere sul pianeta [radice?]);
+tech. di produzione (produzione e numero miniere sul pianeta [radice?]);*/

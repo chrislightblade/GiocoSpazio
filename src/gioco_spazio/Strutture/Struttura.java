@@ -6,6 +6,7 @@
 package gioco_spazio.Strutture;
 
 import gioco_spazio.Sistemi.Pianeta;
+import gioco_spazio.Utility;
 import java.util.Date;
 import util.DateFunction;
 
@@ -15,57 +16,67 @@ import util.DateFunction;
  */
 public class Struttura {
 
-    private String nomeStruttura;
-    private int livelloStruttura;
-    private int costoMetallo;
-    private int costoCristallo;
-    private int costoIdrogeno;
-    private String tempoLevelUp;
-    private double fattoreProduzione;//per aggiornare la produzione post levelUp    
-    private int valoreProdotto;//al secondo    
+    String nomeStruttura = "";
+    private int livelloStruttura = 1;
+    private int costoMetallo = 0;
+    private int costoCristallo = 0;
+    private int costoIdrogeno = 0;
+    private int tempoLevelUp = 0;
+    private int parametroAumentoCostoMetallo = 0;
+    private int parametroAumentoCostoCristallo = 0;
+    private int parametroAumentoCostoIdrogeno = 0;
+    private int parametroAumentoCostoTempo = 0;
+
     private boolean levelUp = false;
+    private Date dataInizioUp = null;
 
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void levelUp(Pianeta p) {
+    public void inizioLevelUp(Pianeta p) {
         //level up in tot tempo;
+        if (Utility.checkCosto(p, nomeStruttura)) {
+            //Date data = new Date();
             levelUp = true;
-            p.setRiservaCristallo(costoCristallo);
-            p.setRiservaMetallo(costoMetallo);
-            p.setRiservaIdrogeno(costoIdrogeno);
-        
+            p.setRiservaCristallo(-costoCristallo);
+            p.setRiservaMetallo(-costoMetallo);
+            p.setRiservaIdrogeno(-costoIdrogeno);
+            dataInizioUp = new Date();
+        }
+
     }
 
-    public void setParametriPostLevelUp(double p1, double p2, double p3, double p4) {
+    /*public void setParametriPostLevelUp(Pianeta p, int index) {
 
-        setCostoMetallo(costoMetallo * p1(parametro));
-        setCostoCristallo(costoCristallo * p2(parametro));
-        setCostoIdrogeno(costoIdrogeno * p3(parametro));
-        setTempoLevelUp(tempoLevelUp * p4(parametro));
+        //levelUp = false;
+        for (Struttura s : p.getStrutture().strutture) {
+            if (s.getNomeStruttura().equals(nomeStruttura)) {
+                setCostoMetallo(costoMetallo * parametroAumentoCostoMetallo);
+                setCostoCristallo(costoCristallo * parametroAumentoCostoCristallo);
+                setCostoIdrogeno(costoIdrogeno * parametroAumentoCostoIdrogeno);
+                setTempoLevelUp(tempoLevelUp * parametroAumentoCostoTempo);
+            }
+        }        
+    }*/
+    public void setParametriPostLevelUp() {
+
+        setCostoMetallo(costoMetallo * parametroAumentoCostoMetallo);
+        setCostoCristallo(costoCristallo * parametroAumentoCostoCristallo);
+        setCostoIdrogeno(costoIdrogeno * parametroAumentoCostoIdrogeno);
+        setTempoLevelUp(tempoLevelUp * parametroAumentoCostoTempo);
+        levelUp = false;
+        dataInizioUp = null;
+        livelloStruttura++;
+
     }
 
-    public void aggiornaProduzioni(Pianeta p) {
-        Date data = new Date();
-        String Data = DateFunction.converti(data);
-        tempo = converti in secondi da usare per il calcolo;
-        p.setRiservaCristallo(valoreProdottoCristallo * tempo);
-        p.setRiservaMetallo(valoreProdottoMetallo * tempo);
-        p.setRiservaIdrogeno(valoreProdottoIdrogeno * tempo);
+    public void tempoScaduto() {//verifica se la struttura ha finito di uppare, farlo ogni volta checckando se dataInizioUp != null;
+        Date data = new Date();        
+        int secondi = Utility.cambioInSecondi(dataInizioUp, data);
+        if (secondi >= tempoLevelUp) {
+            setParametriPostLevelUp();
+        }
     }
-    
 
-    
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public String getTempoLevelUp() {
-        return tempoLevelUp;
-    }
-
-    public void setTempoLevelUp(String tempoLevelUp) {
-        this.tempoLevelUp = tempoLevelUp;
-    }
-
     public String getNomeStruttura() {
         return nomeStruttura;
     }
@@ -106,23 +117,47 @@ public class Struttura {
         this.costoIdrogeno = costoIdrogeno;
     }
 
-    public double getFattoreProduzione() {
-        return fattoreProduzione;
+    public int getTempoLevelUp() {
+        return tempoLevelUp;
     }
 
-    public void setFattoreProduzione(double fattoreProduzione) {
-        this.fattoreProduzione = fattoreProduzione;
-    }    
-
-    public int getValoreProdottoIdrogeno() {
-        return valoreProdotto;
+    public void setTempoLevelUp(int tempoLevelUp) {
+        this.tempoLevelUp = tempoLevelUp;
     }
 
-    public void setValoreProdotto(int valoreProdotto) {
-        this.valoreProdotto = valoreProdotto;
+    public int getParametroAumentoCostoMetallo() {
+        return parametroAumentoCostoMetallo;
     }
 
-    public boolean isLevelUp() {
+    public void setParametroAumentoCostoMetallo(int parametroAumentoCostoMetallo) {
+        this.parametroAumentoCostoMetallo = parametroAumentoCostoMetallo;
+    }
+
+    public int getParametroAumentoCostoCristallo() {
+        return parametroAumentoCostoCristallo;
+    }
+
+    public void setParametroAumentoCostoCristallo(int parametroAumentoCostoCristallo) {
+        this.parametroAumentoCostoCristallo = parametroAumentoCostoCristallo;
+    }
+
+    public int getParametroAumentoCostoIdrogeno() {
+        return parametroAumentoCostoIdrogeno;
+    }
+
+    public void setParametroAumentoCostoIdrogeno(int parametroAumentoCostoIdrogeno) {
+        this.parametroAumentoCostoIdrogeno = parametroAumentoCostoIdrogeno;
+    }
+
+    public int getParametroAumentoCostoTempo() {
+        return parametroAumentoCostoTempo;
+    }
+
+    public void setParametroAumentoCostoTempo(int parametroAumentoCostoTempo) {
+        this.parametroAumentoCostoTempo = parametroAumentoCostoTempo;
+    }
+
+    /*public boolean isLevelUp() {
         return levelUp;
     }
 
@@ -130,10 +165,15 @@ public class Struttura {
         this.levelUp = levelUp;
     }
 
-    
+    public Date getDataInizioUp() {
+        return dataInizioUp;
+    }
 
+    public void setDataInizioUp(Date dataInizioUp) {
+        this.dataInizioUp = dataInizioUp;
+    }*/
 }
-miniera metallo, cristallo, idrogeno;
+/*miniera metallo, cristallo, idrogeno;
 deposito metallo, cristallo, idrogeno;
 centrale solare, fusione, satelliti;
 centro robot, microbot, nanobot;
@@ -141,4 +181,4 @@ centro ricerca;
 spazioporto;
 portale spaziale;
 luna/e;
-terraformatore;
+terraformatore;*/

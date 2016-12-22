@@ -27,17 +27,18 @@ public class Sistema {
     
     
     
-    public void creaPianetaCasuale(){
+    /*public void creaPianetaCasuale(){
         int spazi = 40 + (20 * posizione) + ((int) Math.floor(Math.random() * 10));
         int temperatura = -200 e poi sale e poi riscende;
-    }
+    }*/
     
     public void creaPianetaConTerraformare(){
         
     }
 }
 
-pianeti specifici ed evento
+/*pianeti specifici ed evento
 pianeti adibiti = ricerca ingengeristica, bioingegneria (hanno la rete di ricerca);
 fascia esterna = meteoriti, nebulosa, 
             trovi= sfera dyson, base aliena ,base pirata
+pianeti con più vene minerarie, o che si possono estrarre sostanze uniche, o non ci sono altre, o bonus su alcune estrazioni*/
