@@ -27,10 +27,10 @@ public class Miniera extends Struttura{
         
     }*/
     
-    private boolean attivo = false;
+    //per la produzione, moltiplicare il fattore di produzione con il valore attuale di produzione e questo nuovo valore sommarlo al base ( vedi foglio excel)
     private double fattoreProduzione = 0;//per aggiornare la produzione post levelUp    
     private double prodottoAlSecondo = 0;//al secondo  
-    private Date oldDate = null;
+    private Date oldDate = new Date();
     private double bonusProduzione = 0;
     private double consumo = 0;
     private double fattoreconsumo = 0;
@@ -39,8 +39,8 @@ public class Miniera extends Struttura{
     public void aggiornaProduzioni(Pianeta p) {
         Date data = new Date();
         //String Data = DateFunction.converti(data);
-        int tempo = Utility.cambioInSecondi(oldDate , data);
-        double prodotto = prodottoAlSecondo * tempo;
+        double tempo = Utility.cambioInSecondi(oldDate , data) ;
+        double prodotto = (prodottoAlSecondo * tempo) / 3600 ;
         if(bonusProduzione != 0){
             prodotto += (prodotto * bonusProduzione)/100;
         }

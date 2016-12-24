@@ -17,18 +17,23 @@ import util.DateFunction;
 public class Struttura {
 
     String nomeStruttura = "";
-    private int livelloStruttura = 1;
+    private int livelloStruttura = 0;
     private int costoMetallo = 0;
     private int costoCristallo = 0;
     private int costoIdrogeno = 0;
-    private int tempoLevelUp = 0;
+    private double parametroTempoLevelUp = 0;
+    private int tempoLevelUp = 0;//oppure costruzione da zero
     private int parametroAumentoCostoMetallo = 0;
     private int parametroAumentoCostoCristallo = 0;
     private int parametroAumentoCostoIdrogeno = 0;
     private int parametroAumentoCostoTempo = 0;
-
-    private boolean levelUp = false;
-    private Date dataInizioUp = null;
+    private String requisitiPerCostruirlo[];
+    private int livelloRequisitiPerCostruirlo[];
+    
+    private boolean levelUp = false;//oppure fase di costruzione da zero, se in true lo sto costruendo la prima volta
+    private Date dataInizioUp = null;//oppure data inizio costruzione da zero
+    
+    private boolean attivo = false;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void inizioLevelUp(Pianeta p) {
@@ -72,7 +77,8 @@ public class Struttura {
         Date data = new Date();        
         int secondi = Utility.cambioInSecondi(dataInizioUp, data);
         if (secondi >= tempoLevelUp) {
-            setParametriPostLevelUp();
+            setAttivo(true);
+            setParametriPostLevelUp();            
         }
     }
 
@@ -157,6 +163,8 @@ public class Struttura {
         this.parametroAumentoCostoTempo = parametroAumentoCostoTempo;
     }
 
+    
+    
     /*public boolean isLevelUp() {
         return levelUp;
     }
@@ -172,13 +180,55 @@ public class Struttura {
     public void setDataInizioUp(Date dataInizioUp) {
         this.dataInizioUp = dataInizioUp;
     }*/
+
+    public String[] getRequisitiPerCostruirlo() {
+        return requisitiPerCostruirlo;
+    }
+
+    public void setRequisitiPerCostruirlo(String[] requisitiPerCostruirlo) {
+        this.requisitiPerCostruirlo = requisitiPerCostruirlo;
+    }
+
+    public int[] getLivelloRequisitiPerCostruirlo() {
+        return livelloRequisitiPerCostruirlo;
+    }
+
+    public void setLivelloRequisitiPerCostruirlo(int[] livelloRequisitiPerCostruirlo) {
+        this.livelloRequisitiPerCostruirlo = livelloRequisitiPerCostruirlo;
+    }
+
+    public boolean isLevelUp() {
+        return levelUp;
+    }
+
+    public void setLevelUp(boolean levelUp) {
+        this.levelUp = levelUp;
+    }
+
+    public Date getDataInizioUp() {
+        return dataInizioUp;
+    }
+
+    public void setDataInizioUp(Date dataInizioUp) {
+        this.dataInizioUp = dataInizioUp;
+    }
+
+    public boolean getAttivo() {
+        return attivo;
+    }
+
+    public void setAttivo(boolean attivo) {
+        this.attivo = attivo;
+    }
+
+    public double getParametroTempoLevelUp() {
+        return parametroTempoLevelUp;
+    }
+
+    public void setParametroTempoLevelUp(double parametroTempoLevelUp) {
+        this.parametroTempoLevelUp = parametroTempoLevelUp;
+    }
+    
+    
 }
-/*miniera metallo, cristallo, idrogeno;
-deposito metallo, cristallo, idrogeno;
-centrale solare, fusione, satelliti;
-centro robot, microbot, nanobot;
-centro ricerca;
-spazioporto;
-portale spaziale;
-luna/e;
-terraformatore;*/
+

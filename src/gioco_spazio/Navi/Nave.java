@@ -24,4 +24,5 @@ public class Nave {
 /*Nave terraformante;
 Morte nera;
 navi con poteri = +crit, +potenza, possono stordire, ecc...;
-nave supporto a produzioni;*/
+nave supporto a produzioni;
+nave a bombe di singolarità*/

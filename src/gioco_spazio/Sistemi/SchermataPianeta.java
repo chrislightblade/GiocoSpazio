@@ -3,7 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gioco_spazio;
+package gioco_spazio.Sistemi;
+
+import gioco_spazio.Account_giocatore.Account_giocatore;
+import gioco_spazio.Strutture.Miniera;
+import gioco_spazio.Strutture.Struttura;
+import java.util.Date;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -14,8 +20,46 @@ public class SchermataPianeta extends javax.swing.JFrame {
     /**
      * Creates new form SchermataPianeta
      */
-    public SchermataPianeta() {
+    Account_giocatore ag;
+    Pianeta pianeta;
+    DefaultListModel modelEdifici = new DefaultListModel();
+    DefaultListModel modeldaCostruire = new DefaultListModel();
+
+    public SchermataPianeta(Pianeta pianeta, Account_giocatore ag) {
         initComponents();
+        this.ag = ag;
+        this.pianeta = pianeta;
+        jLStampaNomePianeta.setText(this.pianeta.getNome());
+        jLCristalloAttuale.setText("" + this.pianeta.getRiservaCristallo());
+        jLCristalloTotale.setText("" + this.pianeta.getDepositoCristallo());
+        //jLEnergiaResidua.setText("" + this.pianeta.get);
+        //jLEnergiaTotale.setText(string);
+        jLIdrogenoAttuale.setText("" + this.pianeta.getRiservaIdrogeno());
+        jLIdrogenoTotale.setText("" + this.pianeta.getDepositoIdrogeno());
+        jLMetalloAttuale.setText("" + this.pianeta.getRiservaMetallo());
+        jLMetalloTotale.setText("" + this.pianeta.getDepositoMetallo());
+        jLStamapSpaziPianeta.setText("" + this.pianeta.getSpazioDisponibile());
+        jLSpaziTotali.setText("" + this.pianeta.getSpazioDisponibile());
+
+        refreshEdifici();
+    }
+
+    private void refreshEdifici() {
+        modelEdifici = new DefaultListModel();
+        for (Struttura l : pianeta.getStrutture()) {
+            modelEdifici.addElement(l.getNomeStruttura());
+        }
+        jLedificiPresenti.setModel(modelEdifici);
+    }
+    
+    public void stampaEdificiCostruibili() {
+        for (Struttura s : pianeta.getStrutture()) {
+            if(pianeta.checkPrerequisiti(s, ag) && !s.getAttivo()){
+                modeldaCostruire.addElement(s);
+                s.setLevelUp(true);
+                s.setDataInizioUp(new Date());
+            }            
+        }        
     }
 
     /**
@@ -38,19 +82,24 @@ public class SchermataPianeta extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLStampaNomePianeta = new javax.swing.JLabel();
         jLStamapSpaziPianeta = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        jLMetalloAttuale = new javax.swing.JLabel();
+        jLMetalloTotale = new javax.swing.JLabel();
+        jLCristalloAttuale = new javax.swing.JLabel();
+        jLCristalloTotale = new javax.swing.JLabel();
+        jLIdrogenoAttuale = new javax.swing.JLabel();
+        jLIdrogenoTotale = new javax.swing.JLabel();
+        jLEnergiaResidua = new javax.swing.JLabel();
+        jLEnergiaTotale = new javax.swing.JLabel();
         jBAggiornaProduzione = new javax.swing.JButton();
+        jLSpaziTotali = new javax.swing.JLabel();
+        jBCreaStruttura = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jLedificiPresenti = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jLStruttureDaCostruire = new javax.swing.JList<>();
+        jLabel8 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -77,21 +126,21 @@ public class SchermataPianeta extends javax.swing.JFrame {
 
         jLStamapSpaziPianeta.setText("spazi");
 
-        jLabel9.setText("metallo");
+        jLMetalloAttuale.setText("metallo");
 
-        jLabel10.setText("metallo totale");
+        jLMetalloTotale.setText("metallo totale");
 
-        jLabel11.setText("cristallo");
+        jLCristalloAttuale.setText("cristallo");
 
-        jLabel12.setText("cristallo totale");
+        jLCristalloTotale.setText("cristallo totale");
 
-        jLabel13.setText("idrogeno");
+        jLIdrogenoAttuale.setText("idrogeno");
 
-        jLabel14.setText("idrogeno totale");
+        jLIdrogenoTotale.setText("idrogeno totale");
 
-        jLabel15.setText("energia residua");
+        jLEnergiaResidua.setText("energia residua");
 
-        jLabel16.setText("energia totale");
+        jLEnergiaTotale.setText("energia totale");
 
         jBAggiornaProduzione.setText("Aggiorna Produzione");
         jBAggiornaProduzione.addActionListener(new java.awt.event.ActionListener() {
@@ -100,51 +149,63 @@ public class SchermataPianeta extends javax.swing.JFrame {
             }
         });
 
+        jLSpaziTotali.setText("jLabel9");
+
+        jBCreaStruttura.setText("Crea Struttura");
+        jBCreaStruttura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCreaStrutturaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
-                    .addComponent(jBAggiornaProduzione))
+                .addGap(62, 62, 62)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLStampaNomePianeta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLStamapSpaziPianeta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLStamapSpaziPianeta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLSpaziTotali, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLCristalloAttuale, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLCristalloTotale, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLMetalloAttuale, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLMetalloTotale, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLIdrogenoAttuale, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLIdrogenoTotale, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLEnergiaResidua, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLEnergiaTotale, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(30, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jBAggiornaProduzione)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBCreaStruttura, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,41 +217,54 @@ public class SchermataPianeta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLStamapSpaziPianeta))
+                    .addComponent(jLStamapSpaziPianeta)
+                    .addComponent(jLSpaziTotali))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(jLMetalloAttuale)
+                    .addComponent(jLMetalloTotale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLCristalloAttuale)
+                    .addComponent(jLCristalloTotale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
+                    .addComponent(jLIdrogenoAttuale)
+                    .addComponent(jLIdrogenoTotale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16))
+                    .addComponent(jLEnergiaResidua)
+                    .addComponent(jLEnergiaTotale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
-                .addComponent(jBAggiornaProduzione)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBAggiornaProduzione)
+                    .addComponent(jBCreaStruttura))
                 .addGap(21, 21, 21))
         );
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        jLedificiPresenti.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jLedificiPresenti);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Strutture Attive");
+
+        jLStruttureDaCostruire.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jLStruttureDaCostruire);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Strutture da Costruire");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -199,8 +273,10 @@ public class SchermataPianeta extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -210,7 +286,10 @@ public class SchermataPianeta extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -239,7 +318,20 @@ public class SchermataPianeta extends javax.swing.JFrame {
 
     private void jBAggiornaProduzioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAggiornaProduzioneActionPerformed
         // TODO add your handling code here:
+        for (Struttura s : pianeta.getStrutture()) {
+            Miniera m = (Miniera) s;
+            if (s.getNomeStruttura().equalsIgnoreCase("Miniera di Metallo") || s.getNomeStruttura().equalsIgnoreCase("Miniera di Cristallo") || s.getNomeStruttura().equalsIgnoreCase("Fabbrica di Idrogeno")) {
+                m.aggiornaProduzioni(pianeta);
+            }            
+        }
+        jLCristalloAttuale.setText("" + Math.floor(this.pianeta.getRiservaCristallo()));
+        jLIdrogenoAttuale.setText("" + Math.floor(this.pianeta.getRiservaIdrogeno()));
+        jLMetalloAttuale.setText("" + Math.floor(this.pianeta.getRiservaMetallo()));
     }//GEN-LAST:event_jBAggiornaProduzioneActionPerformed
+
+    private void jBCreaStrutturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreaStrutturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBCreaStrutturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,28 +370,33 @@ public class SchermataPianeta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAggiornaProduzione;
+    private javax.swing.JButton jBCreaStruttura;
+    private javax.swing.JLabel jLCristalloAttuale;
+    private javax.swing.JLabel jLCristalloTotale;
+    private javax.swing.JLabel jLEnergiaResidua;
+    private javax.swing.JLabel jLEnergiaTotale;
+    private javax.swing.JLabel jLIdrogenoAttuale;
+    private javax.swing.JLabel jLIdrogenoTotale;
+    private javax.swing.JLabel jLMetalloAttuale;
+    private javax.swing.JLabel jLMetalloTotale;
+    private javax.swing.JLabel jLSpaziTotali;
     private javax.swing.JLabel jLStamapSpaziPianeta;
     private javax.swing.JLabel jLStampaNomePianeta;
+    private javax.swing.JList<String> jLStruttureDaCostruire;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JList<String> jLedificiPresenti;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

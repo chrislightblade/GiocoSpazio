@@ -1,5 +1,7 @@
 package gioco_spazio;
 
+import gioco_spazio.Sistemi.Pianeta;
+import gioco_spazio.Sistemi.SchermataPianeta;
 import java.util.Date;
 import util.DateFunction;
 
@@ -19,6 +21,16 @@ public class Gioco_spazio {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        Pianeta p = new Pianeta("Ciaone", 163, 6);
+        p.creaMinieraMetallo();
+       
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SchermataPianeta(p).setVisible(true);
+            }
+        });
     }
 }
         

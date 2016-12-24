@@ -11,6 +11,26 @@ package gioco_spazio.Tecnologie;
  */
 public class Ricerca {
     
+    private String nome;
+    private int livello;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getLivello() {
+        return livello;
+    }
+
+    public void setLivello(int livello) {
+        this.livello = livello;
+    }
+    
+    
 }
 /*laser;
 ionica;

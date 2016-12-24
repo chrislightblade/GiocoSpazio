@@ -6,6 +6,7 @@
 package gioco_spazio.Account_giocatore;
 
 import gioco_spazio.Sistemi.Pianeta;
+import gioco_spazio.Tecnologie.Ricerca;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +23,7 @@ public class Account_giocatore {
     private int numeroPianetiPosseduti;
     //private String ufficiali;
     ArrayList<Pianeta> pianetiPosseduti = new ArrayList<Pianeta>();
+    ArrayList<Ricerca> ricercheAttive = new ArrayList<Ricerca>();
     
     /*public void costruisciStruttura(){
         check sul limite delle strutture, sullo spazio sul pianeta, 
@@ -75,6 +77,14 @@ public class Account_giocatore {
 
     public void setPianetiPosseduti(ArrayList<Pianeta> pianetiPosseduti) {
         this.pianetiPosseduti = pianetiPosseduti;
+    }
+
+    public ArrayList<Ricerca> getRicercheAttive() {
+        return ricercheAttive;
+    }
+
+    public void setRicercheAttive(ArrayList<Ricerca> ricercheAttive) {
+        this.ricercheAttive = ricercheAttive;
     }
     
     
