@@ -20,13 +20,11 @@ public class Struttura {
     private int livelloStruttura = 0;
     private int costoMetallo = 0;
     private int costoCristallo = 0;
-    private int costoIdrogeno = 0;
-    private double parametroTempoLevelUp = 0;
+    private int costoIdrogeno = 0;    
     private int tempoLevelUp = 0;//oppure costruzione da zero
-    private int parametroAumentoCostoMetallo = 0;
-    private int parametroAumentoCostoCristallo = 0;
-    private int parametroAumentoCostoIdrogeno = 0;
-    private int parametroAumentoCostoTempo = 0;
+    //private int parametroAumentoCostoMetallo = 0;
+    //private int parametroAumentoCostoCristallo = 0;
+    //private int parametroAumentoCostoIdrogeno = 0;    
     private String requisitiPerCostruirlo[];
     private int livelloRequisitiPerCostruirlo[];
     
@@ -61,12 +59,9 @@ public class Struttura {
             }
         }        
     }*/
-    public void setParametriPostLevelUp() {
+    public void setParametriPostLevelUp() {//calcola anche il tempo nuovo di level up
 
-        setCostoMetallo(costoMetallo * parametroAumentoCostoMetallo);
-        setCostoCristallo(costoCristallo * parametroAumentoCostoCristallo);
-        setCostoIdrogeno(costoIdrogeno * parametroAumentoCostoIdrogeno);
-        setTempoLevelUp(tempoLevelUp * parametroAumentoCostoTempo);
+        setTempoLevelUp((getCostoMetallo() + getCostoCristallo()) / (2500 * Math.max(4 - getLivelloStruttura() / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
         levelUp = false;
         dataInizioUp = null;
         livelloStruttura++;

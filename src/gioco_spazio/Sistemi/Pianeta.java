@@ -103,12 +103,12 @@ public class Pianeta {
                 depositoMetallo = d.getCapienzaDepositofinale();
             }
 
-            if (nome.equals("Deposito di Cristallo")) {
+            if (s.getNomeStruttura().equals("Deposito di Cristallo")) {
                 Deposito d = (Deposito) s;
                 depositoCristallo = d.getCapienzaDepositofinale();
             }
 
-            if (nome.equals("Deposito di Idrogeno")) {
+            if (s.getNomeStruttura().equals("Deposito di Idrogeno")) {
                 Deposito d = (Deposito) s;
                 depositoIdrogeno = d.getCapienzaDepositofinale();
             }
@@ -127,7 +127,6 @@ public class Pianeta {
                     }
                 }
             }
-
         }
         if(ok == nome.length){
             return true;
@@ -135,79 +134,67 @@ public class Pianeta {
         return false;
     }
 
-    public void creaMinieraMetallo() {
+    public void creaMinieraMetallo(Account_giocatore ac) {
         Miniera m = new Miniera();
-        m.setNomeStruttura("Miniera di Metallo");
-        m.setFattoreProduzione(1.18);//aggiungi
-        m.setProduzioneBase(165);
-        m.setFattoreconsumo(1.3);
-        m.setConsumo(11);
-        m.setCostoMetallo(60);
-        m.setCostoCristallo(15);
+        m.setNomeStruttura("Miniera di Metallo");//(int) ((30 * level * Math.pow(1.1, level))) * (1 + 0.01* level plasmi)) * vel economia
+        
+        m.setConsumo((int) (10 * Math.pow(1.1, 1)));//
+        m.setCostoMetallo((int) (60*Math.pow(1.5, 1 - 1)));
+        m.setCostoCristallo((int) (15*Math.pow(1.5, 1 - 1)));
         m.setCostoIdrogeno(0);        
-        m.setProdottoAlSecondo(165);        
-        m.setTempoLevelUp(00.21);
-        m.setParametroTempoLevelUp(1.5);
-        m.setParametroAumentoCostoMetallo(1.5);
-        m.setParametroAumentoCostoCristallo(1.5);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setProdottoAllOra((30 * Math.pow(1.1, 1))/* * (1 + 0.01 * livelloplasmi)*/ * ac.getVelEconomia());        
+        m.setTempoLevelUp((int)((60*Math.pow(1.5, 1 - 1)) + (15*Math.pow(1.5, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
         
         strutture.add(m);
     }
+    
+    
 
-    public void creaMinieraCristallo() {
+    public void creaMinieraCristallo(Account_giocatore ac) {
         Miniera m = new Miniera();
-        m.setNomeStruttura("Miniera di Cristallo");
-        m.setFattoreProduzione(1.16);//0.47
-        m.setProduzioneBase(110);
-        m.setFattoreconsumo(1.3);
-        m.setConsumo(11);
-        m.setCostoMetallo(48);
-        m.setCostoCristallo(24);
+        m.setNomeStruttura("Miniera di Cristallo");////(int) ((20 * level * Math.pow(1.1, level))) * (1 + 0.0066* level plasmi)) * vel economia
+        
+        
+       
+        m.setConsumo((int) (10 * Math.pow(1.1, 1)));
+        m.setCostoMetallo((int) (48*Math.pow(1.6, 1 - 1)));
+        m.setCostoCristallo((int) (24*Math.pow(1.6, 1 - 1)));
         m.setCostoIdrogeno(0);        
-        m.setProdottoAlSecondo(110);
+        m.setProdottoAllOra(20 * Math.pow(1.1, 1)/* * (1 + 0.0066 * livelloplasmi)*/ * ac.getVelEconomia());
         m.setAttivo(true);
-        m.setTempoLevelUp(00.20);
-        m.setParametroTempoLevelUp(1.5);
-        m.setParametroAumentoCostoMetallo(0.62);
-        m.setParametroAumentoCostoCristallo(0.62);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setTempoLevelUp((int)((48*Math.pow(1.6, 1 - 1)) + (24*Math.pow(1.6, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+        
         strutture.add(m);
     }
+    
 
-    public void creaFabbricaIdrogeno() {
+    public void creaFabbricaIdrogeno(Account_giocatore ac) {
         Miniera m = new Miniera();
-        m.setNomeStruttura("Fabbrica di Idrogeno");
-        m.setFattoreProduzione(1.14);
-        m.setProduzioneBase(65);
-        m.setFattoreconsumo(1.3);
-        m.setConsumo(22);
-        m.setCostoMetallo(0);
-        m.setCostoCristallo(48);
-        m.setCostoIdrogeno(24);        
-        m.setProdottoAlSecondo(65);
+        m.setNomeStruttura("Fabbrica di Idrogeno");//(int) ((10 * level * Math.pow(1.1, level))) *(-0.004*temperatura + 1.44) * (1 + 0.01* level plasmi)) * vel economia
+        
+        m.setConsumo((int) (20 * Math.pow(1.1, 1)));
+        m.setCostoMetallo((int) (225*Math.pow(1.5, 1 - 1)));
+        m.setCostoCristallo((int) (75*Math.pow(1.5, 1 - 1)));
+        m.setCostoIdrogeno(0);        
+        m.setProdottoAllOra(10 * Math.pow(1.1, 1)/* * (1 + 0.0066 * livelloplasmi)*/ * ac.getVelEconomia());
         m.setAttivo(true);
-        m.setTempoLevelUp(1.26);
-        m.setParametroTempoLevelUp(1.5);
-        m.setParametroAumentoCostoMetallo(1.5);
-        m.setParametroAumentoCostoCristallo(1.5);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setTempoLevelUp((int)((225*Math.pow(1.5, 1 - 1)) + (75*Math.pow(1.5, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));        
+        
         strutture.add(m);
     }
+    
 
     public void creaCentraleSolare() {
         Miniera m = new Miniera();
-        m.setNomeStruttura("Centrale Solare");
-        m.setFattoreProduzione(22 + 4 + m.getLivelloStruttura());
+        m.setNomeStruttura("Centrale Solare");//20*level*Math.pow(1.1, level)
+        m.setFattoreProduzione();
         m.setProduzioneBase(22);
-        m.setCostoMetallo(00);
-        m.setCostoCristallo(00);
+        m.setCostoMetallo(75);
+        m.setCostoCristallo(30);
         m.setCostoIdrogeno(00);
-        m.setTempoLevelUp();
-        m.setParametroTempoLevelUp();
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setTempoLevelUp(00.30);
+        m.setParametroTempoLevelUp(1.5);
+        
         strutture.add(m);
     }
 
@@ -217,11 +204,11 @@ public class Pianeta {
         d.setCostoMetallo(1000);
         d.setCostoCristallo(0);
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(05.50);
+        d.setTempoLevelUp(04.48);
         d.setParametroTempoLevelUp(2);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        d.setParametroAumentoCostoMetallo(2);
+        d.setParametroAumentoCostoCristallo(0);
+        d.setParametroAumentoCostoIdrogeno(0);
         strutture.add(d);
     }
     
@@ -231,11 +218,11 @@ public class Pianeta {
         d.setCostoMetallo(1000);
         d.setCostoCristallo(500);
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(07.10);
+        d.setTempoLevelUp(07.12);
         d.setParametroTempoLevelUp(2);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        d.setParametroAumentoCostoMetallo(2);
+        d.setParametroAumentoCostoCristallo(2);
+        d.setParametroAumentoCostoIdrogeno(0);
         strutture.add(d);
     }
     
@@ -245,23 +232,48 @@ public class Pianeta {
         d.setCostoMetallo(1000);
         d.setCostoCristallo(1000);
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(09.40);
+        d.setTempoLevelUp(09.36);
         d.setParametroTempoLevelUp(2);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        d.setParametroAumentoCostoMetallo(2);
+        d.setParametroAumentoCostoCristallo(2);
+        d.setParametroAumentoCostoIdrogeno(0);
         strutture.add(d);
     }
     
-        /*"Fabbrica di Robot";
+        /*
+        "Deposito segreto"; nasconde un tot di risoerse alle razzie nemiche
+        m.setTempoLevelUp(4 ore);
+        m.setParametroTempoLevelUp(2);
+        m.setCostoMetallo(0);
+        devi avere 1000 di energia
+        m.setCostoCristallo(50000);
+        m.setCostoIdrogeno(100000);
+        m.setParametroAumentoCostoMetallo(0);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
+        "Centro Spedizioni"; ?  ?  ?  struttura atta alla spedizione di navi nello spazio profondo e inesplorato
+        m.setTempoLevelUp(4 ore);
+        m.setParametroTempoLevelUp(2);
+        m.setCostoMetallo(0);
+        devi avere 1000 di energia
+        m.setCostoCristallo(50000);
+        m.setCostoIdrogeno(100000);
+        m.setParametroAumentoCostoMetallo(0);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
+    
+        "Fabbrica di Robot";
         m.setTempoLevelUp(02.30);
-        m.setParametroTempoLevelUp();
+        m.setParametroTempoLevelUp(2);
         m.setCostoMetallo(400);
         m.setCostoCristallo(120);
         m.setCostoIdrogeno(200);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setParametroAumentoCostoMetallo(2);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
         "Fabbrica di Microbot";
         m.setTempoLevelUp();
         m.setParametroTempoLevelUp();
@@ -271,69 +283,67 @@ public class Pianeta {
         m.setParametroAumentoCostoMetallo(0);
         m.setParametroAumentoCostoCristallo(0);
         m.setParametroAumentoCostoIdrogeno(0);
+    
         "Fabbrica di Nanobot";
         m.setTempoLevelUp(5 giorni);
         m.setParametroTempoLevelUp();
         m.setCostoMetallo(1000000);
         m.setCostoCristallo(500000);
         m.setCostoIdrogeno(100000);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
-        "Centrale Solare";
-        m.setTempoLevelUp(30);
-        m.setParametroTempoLevelUp();
-        m.setCostoMetallo(75);
-        m.setCostoCristallo(30);
-        m.setCostoIdrogeno(0);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setParametroAumentoCostoMetallo(2);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+        
         "Centrale a Fusione";
-        m.setTempoLevelUp(06.00);
-        m.setParametroTempoLevelUp();
+        m.setTempoLevelUp(06.02); //30 * level * Math.pow((1.05 + level tech energia * 0.01), level)
+        m.setParametroTempoLevelUp(1.55);
         m.setCostoMetallo(900);
         m.setCostoCristallo(360);
         m.setCostoIdrogeno(180);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setParametroAumentoCostoMetallo(1.8);
+        m.setParametroAumentoCostoCristallo(1.8);
+        m.setParametroAumentoCostoIdrogeno(1.8);
+    
         "Satellite Solare";
-        m.setTempoLevelUp();
+        m.setTempoLevelUp(09.36);
         m.setParametroTempoLevelUp();
-        m.setCostoMetallo(00);
-        m.setCostoCristallo(00);
-        m.setCostoIdrogeno(00);
+        m.setCostoMetallo(0);
+        m.setCostoCristallo(2000);
+        m.setCostoIdrogeno(500);
         m.setParametroAumentoCostoMetallo(0);
         m.setParametroAumentoCostoCristallo(0);
         m.setParametroAumentoCostoIdrogeno(0);
+    
         "Centro di Ricerca";
-        m.setTempoLevelUp(02.50);
-        m.setParametroTempoLevelUp();
+        m.setTempoLevelUp(02.52);
+        m.setParametroTempoLevelUp(2);
         m.setCostoMetallo(200);
         m.setCostoCristallo(400);
         m.setCostoIdrogeno(200);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setParametroAumentoCostoMetallo(2);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
         "SpazioPorto";
-        m.setTempoLevelUp();
-        m.setParametroTempoLevelUp();
-        m.setCostoMetallo(00);
-        m.setCostoCristallo(00);
-        m.setCostoIdrogeno(00);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
-        "Portale Spaziale";
-        m.setTempoLevelUp(02.50);
-        m.setParametroTempoLevelUp();
+        m.setTempoLevelUp(02.52);
+        m.setParametroTempoLevelUp(2);
         m.setCostoMetallo(400);
-        m.setCostoCristallo(200);
-        m.setCostoIdrogeno(100);
-        m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);
+        m.setCostoCristallo(120);
+        m.setCostoIdrogeno(200);
+        m.setParametroAumentoCostoMetallo(2);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
+        "Portale Spaziale";
+        m.setTempoLevelUp(20 giorni);
+        m.setParametroTempoLevelUp(2);
+        m.setCostoMetallo(2000000);
+        m.setCostoCristallo(4000000);
+        m.setCostoIdrogeno(2000000);
+        m.setParametroAumentoCostoMetallo(2);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
         "Luna";
         m.setTempoLevelUp();
         m.setParametroTempoLevelUp();
@@ -343,16 +353,39 @@ public class Pianeta {
         m.setParametroAumentoCostoMetallo(0);
         m.setParametroAumentoCostoCristallo(0);
         m.setParametroAumentoCostoIdrogeno(0);
+    
         "TerraFormer";
-        m.setTempoLevelUp();
-        m.setParametroTempoLevelUp();
+        m.setTempoLevelUp(4 ore);
+        m.setParametroTempoLevelUp(2);
         m.setCostoMetallo(0);
         devi avere 1000 di energia
         m.setCostoCristallo(50000);
         m.setCostoIdrogeno(100000);
         m.setParametroAumentoCostoMetallo(0);
-        m.setParametroAumentoCostoCristallo(0);
-        m.setParametroAumentoCostoIdrogeno(0);*/
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
+        "MegaHangar"; protegge la flotta da attacchi nemici, esponendo solo le risorse planetarie
+        m.setTempoLevelUp(4 ore);
+        m.setParametroTempoLevelUp(2);
+        m.setCostoMetallo(0);
+        devi avere 1000 di energia
+        m.setCostoCristallo(50000);
+        m.setCostoIdrogeno(100000);
+        m.setParametroAumentoCostoMetallo(0);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);
+    
+        "Riparatore"; estensione dello spazio porto, consente di riparare le unità danneggiate
+        m.setTempoLevelUp(4 ore);
+        m.setParametroTempoLevelUp(2);
+        m.setCostoMetallo(0);
+        devi avere 1000 di energia
+        m.setCostoCristallo(50000);
+        m.setCostoIdrogeno(100000);
+        m.setParametroAumentoCostoMetallo(0);
+        m.setParametroAumentoCostoCristallo(2);
+        m.setParametroAumentoCostoIdrogeno(2);*/
     
 
     private void arrayString() {
@@ -499,5 +532,7 @@ public class Pianeta {
     public void setEnergiaProdotta(double energiaProdotta) {
         this.energiaProdotta = energiaProdotta;
     }
+    
+    
 
 }

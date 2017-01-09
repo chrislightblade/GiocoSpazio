@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class Account_giocatore {
     
+    private int velEconomia;
+    
     private String nomeGiocatore;
     private int cristalloTotale;
     private int metalloTotale;
@@ -85,6 +87,14 @@ public class Account_giocatore {
 
     public void setRicercheAttive(ArrayList<Ricerca> ricercheAttive) {
         this.ricercheAttive = ricercheAttive;
+    }
+
+    public int getVelEconomia() {
+        return velEconomia;
+    }
+
+    public void setVelEconomia(int velEconomia) {
+        this.velEconomia = velEconomia;
     }
     
     

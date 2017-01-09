@@ -5,6 +5,7 @@
  */
 package gioco_spazio.Strutture;
 
+import gioco_spazio.Account_giocatore.Account_giocatore;
 import gioco_spazio.Sistemi.Pianeta;
 import gioco_spazio.Utility;
 import java.util.Date;
@@ -27,50 +28,87 @@ public class Miniera extends Struttura{
         
     }*/
     
-    //per la produzione, moltiplicare il fattore di produzione con il valore attuale di produzione e questo nuovo valore sommarlo al base ( vedi foglio excel)
-    private double fattoreProduzione = 0;//per aggiornare la produzione post levelUp    
-    private double prodottoAlSecondo = 0;//al secondo  
+    
+    //private double fattoreProduzione = 0;//per aggiornare la produzione post levelUp    
+    private double prodottoAllOra = 0;//al secondo  
     private Date oldDate = new Date();
-    private double bonusProduzione = 0;
-    private double consumo = 0;
-    private double fattoreconsumo = 0;
-    private double produzioneBase = 0; 
+    //private double bonusProduzione = 0;
+    private double consumo = 0;//20 * level * Math.pow(1.1, level)   
     
     public void aggiornaProduzioni(Pianeta p) {
         Date data = new Date();
         //String Data = DateFunction.converti(data);
         double tempo = Utility.cambioInSecondi(oldDate , data) ;
-        double prodotto = (prodottoAlSecondo * tempo) / 3600 ;
-        if(bonusProduzione != 0){
+        double prodotto = (prodottoAllOra / 3600) * tempo;
+        /*if(bonusProduzione != 0){
             prodotto += (prodotto * bonusProduzione)/100;
-        }
+        }*/
         p.riempiRiserva(prodotto, nomeStruttura);        
         oldDate = data;
         //if(tempoScaduto()){
         //    aggiornaProduzioniPostLevelUp();//da mettere in un aggiorna totale
         //}
     }    
+    
+    public void calcolaConsumoEnergia(){
+        if (getNomeStruttura().equals("Miniera di Metallo")) {
+            this.consumo = (int) 10 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura());
+        }
+
+        if (getNomeStruttura().equals("Miniera di Cristallo")) {
+            this.consumo = (int) 10 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura());
+        }
+
+        if (getNomeStruttura().equals("Fabbrica di Idrogeno")) {
+            this.consumo = (int) 20 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura());
+        }
+    }
+    
+    public void calcolaProduzioneOraria(Pianeta p, Account_giocatore ac){
+        if (getNomeStruttura().equals("Miniera di Metallo")) {
+            this.prodottoAllOra = (int) ((30 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura()))/* * (1 + 0.01 * livelloplasmi)*/) * ac.getVelEconomia();
+        }
+
+        if (getNomeStruttura().equals("Miniera di Cristallo")) {
+            this.prodottoAllOra = (int) ((20 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura()))/* * (1 + 0.0066 * livelloplasmi)*/) * ac.getVelEconomia();
+        }
+
+        if (getNomeStruttura().equals("Fabbrica di Idrogeno")) {
+            this.prodottoAllOra = (int) ((10 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura())) * (-0.004 * p.getTemperatura() + 1.44)/* * (1 + 0.0033 * livelloplasmi)*/) * ac.getVelEconomia();
+        }        
+    }
+    
+    public void calcolaCostoStruttura(){
+        if (getNomeStruttura().equals("Miniera di Metallo")) {            
+            setCostoMetallo((int) (60*Math.pow(1.5, getLivelloStruttura() - 1)));        
+            setCostoCristallo((int) (15*Math.pow(1.5, getLivelloStruttura() - 1)));
+            setCostoIdrogeno(0);           
+        }
+
+        if (getNomeStruttura().equals("Miniera di Cristallo")) {
+            setCostoMetallo((int) (48*Math.pow(1.6, getLivelloStruttura() - 1)));        
+            setCostoCristallo((int) (24*Math.pow(1.6, getLivelloStruttura() - 1)));
+            setCostoIdrogeno(0);
+        }
+
+        if (getNomeStruttura().equals("Fabbrica di Idrogeno")) {
+            setCostoMetallo((int) (225*Math.pow(1.5, getLivelloStruttura() - 1)));        
+            setCostoCristallo((int) (75*Math.pow(1.5, getLivelloStruttura() - 1)));
+            setCostoIdrogeno(0);
+        }    
+    }
         
-    public void aggiornaProduzioniPostLevelUp(){
+    public void aggiornaProduzioniPostLevelUp(Pianeta p, Account_giocatore ac){
         setParametriPostLevelUp();
-        prodottoAlSecondo *= fattoreProduzione;
-    }  
+        calcolaCostoStruttura();
+        calcolaProduzioneOraria(p, ac);
+        calcolaConsumoEnergia();
+        
+    } 
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public double getFattoreProduzione() {
-        return fattoreProduzione;
-    }
-
-    public void setFattoreProduzione(double fattoreProduzione) {
-        this.fattoreProduzione = fattoreProduzione;
-    }
-
-    public double getProdottoAlSecondo() {
-        return prodottoAlSecondo;
-    }
-
-    public void setProdottoAlSecondo(int prodottoAlSecondo) {
-        this.prodottoAlSecondo = prodottoAlSecondo;
-    }
+    
 
     public Date getOldDate() {
         return oldDate;
@@ -80,13 +118,7 @@ public class Miniera extends Struttura{
         this.oldDate = oldDate;
     }
 
-    public double getBonusProduzione() {
-        return bonusProduzione;
-    }
-
-    public void setBonusProduzione(int bonusProduzione) {
-        this.bonusProduzione = bonusProduzione;
-    }
+   
 
     public double getConsumo() {
         return consumo;
@@ -96,13 +128,7 @@ public class Miniera extends Struttura{
         this.consumo = consumo;
     }
 
-    public double getFattoreconsumo() {
-        return fattoreconsumo;
-    }
-
-    public void setFattoreconsumo(double fattoreconsumo) {
-        this.fattoreconsumo = fattoreconsumo;
-    }
+    
 
     public String getNomeStruttura() {
         return nomeStruttura;
@@ -112,13 +138,15 @@ public class Miniera extends Struttura{
         this.nomeStruttura = nomeStruttura;
     }
 
-    public double getProduzioneBase() {
-        return produzioneBase;
+    public double getProdottoAllOra() {
+        return prodottoAllOra;
     }
 
-    public void setProduzioneBase(double produzioneBase) {
-        this.produzioneBase = produzioneBase;
+    public void setProdottoAllOra(double prodottoAllOra) {
+        this.prodottoAllOra = prodottoAllOra;
     }
+
+   
     
     
 }
