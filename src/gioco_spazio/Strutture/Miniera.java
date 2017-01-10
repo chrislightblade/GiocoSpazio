@@ -64,6 +64,7 @@ public class Miniera extends Struttura{
         } else {
         p.riempiRiserva(prodotto, nomeStruttura);   
         }     
+        
         oldDate = data;
         //if(tempoScaduto()){
         //    aggiornaProduzioniPostLevelUp();//da mettere in un aggiorna totale

@@ -194,8 +194,7 @@ public class Pianeta {
         cs.setCostoCristallo((int) (30*Math.pow(1.5, 1 - 1)));
         cs.setCostoIdrogeno(00);
         cs.setTempoLevelUp((int)((75*Math.pow(1.5, 1 - 1)) + (30*Math.pow(1.5, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
-        cs.setParametroTempoLevelUp(1.5);
-        
+                
         strutture.add(cs);
     }
 
@@ -232,14 +231,14 @@ public class Pianeta {
         strutture.add(d);
     }
     
-    public void creaCentraleFusione() {
+    public void creaCentraleFusione(Account_giocatore ac) {
         Centrale_Fusione cf = new Centrale_Fusione();
         cf.setNomeStruttura("Centrale a Fusione");
         cf.setTempoLevelUp((int)((900*Math.pow(1.8, 1 - 1)) + (360*Math.pow(1.8, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
         cf.setCostoMetallo((int) (900 * Math.pow(1.8, 1 - 1)));
         cf.setCostoCristallo((int) (360 * Math.pow(1.8, 1 - 1)));
         cf.setCostoIdrogeno((int) (180 * Math.pow(1.8, 1 - 1)));        
-        cf.setConsumoDeuterio(((10*livello*1,1(livello))*velocità economia);
+        cf.setConsumoDeuterio((int)((10 * Math.pow(1.1, 1)) * ac.getVelEconomia()));
         strutture.add(cf);
     }
     
