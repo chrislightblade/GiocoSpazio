@@ -14,29 +14,36 @@ import java.util.Date;
  *
  * @author Administrator
  */
-public class Centrale_Solare extends Struttura {//contare solo il max prodotto e poi sottrarre per i cosnumi delle industrie
+public class Centrale_Fusione extends Struttura {//contare solo il max prodotto e poi sottrarre per i cosnumi delle industrie
     
     private double prodotto;//al secondo      
     private double bonusProduzione;
     private double prodottoTotale;
+    private int consumoDeuterio;//all'ora
 
     
-    public void calcolaCostoStruttura() {       
-            setCostoMetallo((int) (75 * Math.pow(1.5, getLivelloStruttura() - 1)));
-            setCostoCristallo((int) (30 * Math.pow(1.5, getLivelloStruttura() - 1)));
-            setCostoIdrogeno(0);
+    public void calcolaCostoStruttura() {        
+            setCostoMetallo((int) (900 * Math.pow(1.8, getLivelloStruttura() - 1)));
+            setCostoCristallo((int) (360 * Math.pow(1.8, getLivelloStruttura() - 1)));
+            setCostoIdrogeno((int) (180 * Math.pow(1.8, getLivelloStruttura() - 1)));
         
-    }    
+    }
+    
+    
+    public void calcolaConsumoDeuterio(Pianeta p, Account_giocatore ac){
+        this.consumoDeuterio = (int) ((10 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura())) * ac.getVelEconomia());
+    }
 
     public void calcolaProduzioneOraria(Pianeta p) {//migliorare espressione livello tech energetica
 
-        this.prodotto = (int) ((20 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura()) * Math.pow(1,05 + livello della tecnologia energetica * 0,01, getLivelloStruttura())));
+        this.prodotto = (int) ((30 * getLivelloStruttura() * Math.pow(1.1, getLivelloStruttura()) * Math.pow(1,05 + livello della tecnologia energetica * 0,01, getLivelloStruttura())));
     }
 
     public void aggiornaProduzioniPostLevelUp(Pianeta p, Account_giocatore ac){
         setParametriPostLevelUp();
         calcolaCostoStruttura();
-        calcolaProduzioneOraria(p);         
+        calcolaProduzioneOraria(p);
+        calcolaConsumoDeuterio(p, ac);
     } 
     
     public double getProdotto() {
@@ -71,4 +78,14 @@ public class Centrale_Solare extends Struttura {//contare solo il max prodotto e
         this.prodottoTotale = prodottoTotale;
     }
 
+    public int getConsumoDeuterio() {
+        return consumoDeuterio;
+    }
+
+    public void setConsumoDeuterio(int consumoDeuterio) {
+        this.consumoDeuterio = consumoDeuterio;
+    }
+
+    
+    
 }

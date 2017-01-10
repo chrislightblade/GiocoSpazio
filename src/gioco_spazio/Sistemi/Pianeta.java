@@ -8,6 +8,7 @@ package gioco_spazio.Sistemi;
 import gioco_spazio.Account_giocatore.Account_giocatore;
 import gioco_spazio.Navi.Nave;
 import gioco_spazio.Difese.Difesa;
+import gioco_spazio.Strutture.Centrale_Fusione;
 import gioco_spazio.Strutture.Centrale_Solare;
 import gioco_spazio.Strutture.Deposito;
 import gioco_spazio.Strutture.Miniera;
@@ -185,60 +186,65 @@ public class Pianeta {
     
 
     public void creaCentraleSolare() {
-        Miniera m = new Miniera();
-        m.setNomeStruttura("Centrale Solare");//20*level*Math.pow(1.1, level)
-        m.setFattoreProduzione();
-        m.setProduzioneBase(22);
-        m.setCostoMetallo(75);
-        m.setCostoCristallo(30);
-        m.setCostoIdrogeno(00);
-        m.setTempoLevelUp(00.30);
-        m.setParametroTempoLevelUp(1.5);
+        Centrale_Solare cs = new Centrale_Solare();
+        cs.setNomeStruttura("Centrale Solare");//20*level*Math.pow(1.1, level)
         
-        strutture.add(m);
+        cs.setProdotto((20*Math.pow(1.1, 1 - 1)));
+        cs.setCostoMetallo((int) (75*Math.pow(1.5, 1 - 1)));
+        cs.setCostoCristallo((int) (30*Math.pow(1.5, 1 - 1)));
+        cs.setCostoIdrogeno(00);
+        cs.setTempoLevelUp((int)((75*Math.pow(1.5, 1 - 1)) + (30*Math.pow(1.5, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+        cs.setParametroTempoLevelUp(1.5);
+        
+        strutture.add(cs);
     }
 
     public void creaDepositoMetallo() {
         Deposito d = new Deposito();
         d.setNomeStruttura("Deposito di Metallo");
-        d.setCostoMetallo(1000);
+        d.setCostoMetallo(((int)1000*Math.pow(2, 1 - 1)));
         d.setCostoCristallo(0);
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(04.48);
-        d.setParametroTempoLevelUp(2);
-        d.setParametroAumentoCostoMetallo(2);
-        d.setParametroAumentoCostoCristallo(0);
-        d.setParametroAumentoCostoIdrogeno(0);
+        d.setTempoLevelUp((int)(1000*Math.pow(2, 1 - 1)) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+                
         strutture.add(d);
     }
     
     public void creaDepositoCristallo() {
         Deposito d = new Deposito();
         d.setNomeStruttura("Deposito di Cristallo");
-        d.setCostoMetallo(1000);
-        d.setCostoCristallo(500);
+        d.setCostoMetallo(((int)1000*Math.pow(2, 1 - 1)));
+        d.setCostoCristallo(((int)500*Math.pow(2, 1 - 1)));
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(07.12);
-        d.setParametroTempoLevelUp(2);
-        d.setParametroAumentoCostoMetallo(2);
-        d.setParametroAumentoCostoCristallo(2);
-        d.setParametroAumentoCostoIdrogeno(0);
+        d.setTempoLevelUp((int)((1000*Math.pow(2, 1 - 1)) + (500*Math.pow(2, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+                
         strutture.add(d);
     }
     
     public void creaDepositoIdrogeno() {
         Deposito d = new Deposito();
         d.setNomeStruttura("Deposito di Idrogeno");
-        d.setCostoMetallo(1000);
-        d.setCostoCristallo(1000);
+        d.setCostoMetallo(((int)1000*Math.pow(1.5, 1 - 1)));
+        d.setCostoCristallo(((int)1000*Math.pow(1.5, 1 - 1)));
         d.setCostoIdrogeno(0);
-        d.setTempoLevelUp(09.36);
-        d.setParametroTempoLevelUp(2);
-        d.setParametroAumentoCostoMetallo(2);
-        d.setParametroAumentoCostoCristallo(2);
-        d.setParametroAumentoCostoIdrogeno(0);
+        d.setTempoLevelUp((int)((1000*Math.pow(2, 1 - 1)) + (1000*Math.pow(2, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+        
         strutture.add(d);
     }
+    
+    public void creaCentraleFusione() {
+        Centrale_Fusione cf = new Centrale_Fusione();
+        cf.setNomeStruttura("Centrale a Fusione");
+        cf.setTempoLevelUp((int)((900*Math.pow(1.8, 1 - 1)) + (360*Math.pow(1.8, 1 - 1))) / (2500 * Math.max(4 - 1 / 2, 1) /** (1 + (livello Fabbrica dei robot)) * (2 ^ (livello Fabbrica di naniti))*/));
+        cf.setCostoMetallo((int) (900 * Math.pow(1.8, 1 - 1)));
+        cf.setCostoCristallo((int) (360 * Math.pow(1.8, 1 - 1)));
+        cf.setCostoIdrogeno((int) (180 * Math.pow(1.8, 1 - 1)));        
+        cf.setConsumoDeuterio(((10*livello*1,1(livello))*velocità economia);
+        strutture.add(cf);
+    }
+    
+    
+    
     
         /*
         "Deposito segreto"; nasconde un tot di risoerse alle razzie nemiche
@@ -294,15 +300,7 @@ public class Pianeta {
         m.setParametroAumentoCostoCristallo(2);
         m.setParametroAumentoCostoIdrogeno(2);
         
-        "Centrale a Fusione";
-        m.setTempoLevelUp(06.02); //30 * level * Math.pow((1.05 + level tech energia * 0.01), level)
-        m.setParametroTempoLevelUp(1.55);
-        m.setCostoMetallo(900);
-        m.setCostoCristallo(360);
-        m.setCostoIdrogeno(180);
-        m.setParametroAumentoCostoMetallo(1.8);
-        m.setParametroAumentoCostoCristallo(1.8);
-        m.setParametroAumentoCostoIdrogeno(1.8);
+        
     
         "Satellite Solare";
         m.setTempoLevelUp(09.36);

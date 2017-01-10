@@ -8,6 +8,7 @@ package gioco_spazio.Strutture;
 import gioco_spazio.Account_giocatore.Account_giocatore;
 import gioco_spazio.Sistemi.Pianeta;
 import gioco_spazio.Utility;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -43,7 +44,26 @@ public class Miniera extends Struttura{
         /*if(bonusProduzione != 0){
             prodotto += (prodotto * bonusProduzione)/100;
         }*/
-        p.riempiRiserva(prodotto, nomeStruttura);        
+        if(nomeStruttura == "Fabbrica di Deuterio"){
+        int index = 0;
+        for (Struttura struttura : p.getStrutture()) {
+            if(struttura.getNomeStruttura().equals("Centrale a Fusione")){
+                break;
+            }
+            index++;            
+        }
+        
+        Centrale_Fusione cf = new Centrale_Fusione();
+        
+        if(cf.getLivelloStruttura() !=0){//della centrale a fusione
+            prodotto -= ((cf.getConsumoDeuterio() / 3600) * tempo);
+            p.riempiRiserva(prodotto, nomeStruttura);            
+        } else {
+            p.riempiRiserva(prodotto, nomeStruttura);
+        }
+        } else {
+        p.riempiRiserva(prodotto, nomeStruttura);   
+        }     
         oldDate = data;
         //if(tempoScaduto()){
         //    aggiornaProduzioniPostLevelUp();//da mettere in un aggiorna totale

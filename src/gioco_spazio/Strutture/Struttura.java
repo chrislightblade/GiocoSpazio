@@ -125,41 +125,7 @@ public class Struttura {
     public void setTempoLevelUp(int tempoLevelUp) {
         this.tempoLevelUp = tempoLevelUp;
     }
-
-    public int getParametroAumentoCostoMetallo() {
-        return parametroAumentoCostoMetallo;
-    }
-
-    public void setParametroAumentoCostoMetallo(int parametroAumentoCostoMetallo) {
-        this.parametroAumentoCostoMetallo = parametroAumentoCostoMetallo;
-    }
-
-    public int getParametroAumentoCostoCristallo() {
-        return parametroAumentoCostoCristallo;
-    }
-
-    public void setParametroAumentoCostoCristallo(int parametroAumentoCostoCristallo) {
-        this.parametroAumentoCostoCristallo = parametroAumentoCostoCristallo;
-    }
-
-    public int getParametroAumentoCostoIdrogeno() {
-        return parametroAumentoCostoIdrogeno;
-    }
-
-    public void setParametroAumentoCostoIdrogeno(int parametroAumentoCostoIdrogeno) {
-        this.parametroAumentoCostoIdrogeno = parametroAumentoCostoIdrogeno;
-    }
-
-    public int getParametroAumentoCostoTempo() {
-        return parametroAumentoCostoTempo;
-    }
-
-    public void setParametroAumentoCostoTempo(int parametroAumentoCostoTempo) {
-        this.parametroAumentoCostoTempo = parametroAumentoCostoTempo;
-    }
-
-    
-    
+        
     /*public boolean isLevelUp() {
         return levelUp;
     }
@@ -216,13 +182,11 @@ public class Struttura {
         this.attivo = attivo;
     }
 
-    public double getParametroTempoLevelUp() {
-        return parametroTempoLevelUp;
+    @Override
+    public String toString() {
+        return "Struttura{" + "nomeStruttura=" + nomeStruttura + '}';
     }
 
-    public void setParametroTempoLevelUp(double parametroTempoLevelUp) {
-        this.parametroTempoLevelUp = parametroTempoLevelUp;
-    }
     
     
 }
